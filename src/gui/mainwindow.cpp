@@ -134,7 +134,17 @@ MainWindow::MainWindow()
 	mainIcon.CopyFromBitmap(IconsCollection::Instance()->BMP_SPRINGLOBBY);
 	SetIcon(mainIcon);
 
+#ifdef __WXOSX__
+	// Avoid wxAUI_MGR_TRANSPARENT_HINT (included in wxAUI_MGR_DEFAULT)
+	// which causes infinite recursion via wxPseudoTransparentFrame on
+	// macOS Cocoa: OnSize -> SetTransparent -> SetShape -> resize event.
+	GetAui().manager = new wxAuiManager(this,
+		wxAUI_MGR_ALLOW_FLOATING |
+		wxAUI_MGR_VENETIAN_BLINDS_HINT |
+		wxAUI_MGR_NO_VENETIAN_BLINDS_FADE);
+#else
 	GetAui().manager = new wxAuiManager(this);
+#endif
 
 	wxMenu* menuServer = new wxMenu;
 	menuServer->Append(MENU_CONNECT, _("&Connect..."));
