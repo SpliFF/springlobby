@@ -95,7 +95,9 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${WX_C_FLAGS}")
 
 
 include(CheckIncludeFileCXX)
+set(CMAKE_REQUIRED_FLAGS "${WX_CXX_FLAGS}")
 check_include_file_cxx(wx/config.h HAS_WXGTKHEADERS)
+unset(CMAKE_REQUIRED_FLAGS)
 if(NOT HAS_WXGTKHEADERS)
 	message(FATAL_ERROR "Couldn't find wx/config.h, is wxgtk-dev installed?")
 endif()
