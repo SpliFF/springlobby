@@ -35,7 +35,7 @@ if( ${CMAKE_CROSSCOMPILING} )
 	set(Boost_USE_STATIC_RUNTIME    ON)
 endif()
 
-find_package(Boost 1.42.0 COMPONENTS system REQUIRED)
+find_package(Boost 1.42.0 REQUIRED)
 
 
 add_definitions( -DLOCALE_INSTALL_DIR="${LOCALE_INSTALL_DIR}" )
