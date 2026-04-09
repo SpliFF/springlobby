@@ -43,7 +43,7 @@ ConnectWindow::ConnectWindow(wxWindow* parent)
 		EnterRegistrationMode();
 	}
 
-	Fit();
+	SetWindowStyle(GetWindowStyle() | wxRESIZE_BORDER);
 #ifdef __WXMSW__
 	SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 #endif
@@ -67,7 +67,10 @@ void ConnectWindow::EnterRegistrationMode()
 
 	m_nickname_text->SetFocus();
 	Layout(); Fit(); Thaw();
-	SetMinSize(GetBestSize());
+	wxSize minDIP = FromDIP(wxSize(200, 386));
+	wxSize best = GetBestSize();
+	SetMinSize(wxSize(wxMax(best.x, minDIP.x), wxMax(best.y, minDIP.y)));
+	SetSize(GetMinSize());
 }
 
 void ConnectWindow::EnterLoginMode()
@@ -87,7 +90,10 @@ void ConnectWindow::EnterLoginMode()
 
 	m_ok_button->SetFocus();
 	Fit(); Layout(); Thaw();
-	SetMinSize(GetBestSize());
+	wxSize minDIP = FromDIP(wxSize(200, 386));
+	wxSize best = GetBestSize();
+	SetMinSize(wxSize(wxMax(best.x, minDIP.x), wxMax(best.y, minDIP.y)));
+	SetSize(GetMinSize());
 }
 
 void ConnectWindow::OnChangeMode(wxCommandEvent&)
